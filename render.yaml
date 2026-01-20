@@ -7,10 +7,7 @@ services:
     envVars:
       - key: NODE_ENV
         value: production
-      - key: PORT
-        value: 10000
-      # Smithery API Key - Render 대시보드에서 환경 변수로 설정하세요
-      # - key: SMITHERY_API_KEY
-      #   value: de50bb25-4fb0-4e5d-8648-ec1ce0656b56
+      - key: SMITHERY_API_KEY
+        value: de50bb25-4fb0-4e5d-8648-ec1ce0656b56
     healthCheckPath: /
     plan: free
