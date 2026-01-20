@@ -1,5 +1,12 @@
 import { Hono } from 'hono';
+import { readFileSync } from 'fs';
+import { join } from 'path';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
 import api from './api';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 import { getFarmerDashboard } from './farmer';
 import { getAdminDashboard } from './admin';
 import { getFarmersListPage, getRecordsListPage, getTodayRecordsPage, getUsersListPage } from './admin-details';
@@ -9,6 +16,47 @@ const app = new Hono();
 
 // 인증 미들웨어 헬퍼 함수 (서버 사이드에서는 HTML만 반환, 클라이언트에서 권한 확인)
 // 실제 인증은 클라이언트 사이드에서 localStorage를 통해 확인
+
+// 정적 파일 서빙 (public 폴더)
+app.get('/manifest.json', (c) => {
+  try {
+    const file = readFileSync(join(__dirname, '../public/manifest.json'), 'utf-8');
+    return c.json(JSON.parse(file));
+  } catch {
+    return c.text('{}', 404);
+  }
+});
+
+app.get('/icon-192.png', async (c) => {
+  try {
+    const file = readFileSync(join(__dirname, '../public/icon-192.png'));
+    return c.body(file, 200, { 'Content-Type': 'image/png' });
+  } catch {
+    return c.text('Not found', 404);
+  }
+});
+
+app.get('/icon-512.png', async (c) => {
+  try {
+    const file = readFileSync(join(__dirname, '../public/icon-512.png'));
+    return c.body(file, 200, { 'Content-Type': 'image/png' });
+  } catch {
+    return c.text('Not found', 404);
+  }
+});
+
+app.get('/static/*', async (c) => {
+  const path = c.req.param('*') || '';
+  try {
+    const filePath = join(__dirname, '../public/static', path);
+    const file = readFileSync(filePath, 'utf-8');
+    const ext = path.split('.').pop() || '';
+    const contentType = ext === 'js' ? 'application/javascript' : 'text/plain';
+    return c.body(file, 200, { 'Content-Type': contentType });
+  } catch {
+    return c.text('Not found', 404);
+  }
+});
 
 // API 라우트 마운트
 app.route('/api', api);
