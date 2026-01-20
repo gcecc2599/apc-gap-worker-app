@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#16a34a">
+    <title>APC GAP 기록관리 - 모바일 설치</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 500px;
+            width: 100%;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+        .logo {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .logo-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #16a34a, #22c55e);
+            border-radius: 20px;
+            margin: 0 auto 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 32px;
+            font-weight: bold;
+        }
+        h1 {
+            font-size: 24px;
+            color: #1f2937;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        .subtitle {
+            color: #6b7280;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+        .install-section {
+            background: #f3f4f6;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .install-section h2 {
+            font-size: 18px;
+            color: #111827;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .step {
+            margin-bottom: 15px;
+            padding-left: 25px;
+            position: relative;
+            font-size: 14px;
+            color: #374151;
+            line-height: 1.6;
+        }
+        .step::before {
+            content: counter(step);
+            counter-increment: step;
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 20px;
+            height: 20px;
+            background: #16a34a;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        .install-steps {
+            counter-reset: step;
+        }
+        .url-input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 14px;
+            margin-top: 10px;
+            background: white;
+        }
+        .url-input:focus {
+            outline: none;
+            border-color: #16a34a;
+        }
+        .button {
+            width: 100%;
+            padding: 14px;
+            background: #16a34a;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: background 0.3s;
+        }
+        .button:hover {
+            background: #15803d;
+        }
+        .button:active {
+            transform: scale(0.98);
+        }
+        .info-box {
+            background: #dbeafe;
+            border-left: 4px solid #3b82f6;
+            padding: 12px;
+            border-radius: 4px;
+            margin-top: 15px;
+            font-size: 13px;
+            color: #1e40af;
+        }
+        .warning-box {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 12px;
+            border-radius: 4px;
+            margin-top: 15px;
+            font-size: 13px;
+            color: #92400e;
+        }
+        .success-box {
+            background: #d1fae5;
+            border-left: 4px solid #10b981;
+            padding: 12px;
+            border-radius: 4px;
+            margin-top: 15px;
+            font-size: 13px;
+            color: #065f46;
+            display: none;
+        }
+        @media (max-width: 480px) {
+            .container {
+                padding: 20px;
+            }
+            h1 {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <div class="logo-icon">APC</div>
+            <h1>APC GAP 기록관리</h1>
+            <p class="subtitle">모바일 앱 설치하기</p>
+        </div>
+
+        <div class="install-section">
+            <h2>📱 설치 방법</h2>
+            <div class="install-steps">
+                <div class="step">
+                    <strong>Android:</strong> Chrome 메뉴 (⋮) > "홈 화면에 추가"
+                </div>
+                <div class="step">
+                    <strong>iOS:</strong> Safari 공유 버튼 (□↑) > "홈 화면에 추가"
+                </div>
+            </div>
+        </div>
+
+        <div class="install-section">
+            <h2>🌐 웹사이트 주소</h2>
+            <input type="text" 
+                   id="serverUrl" 
+                   class="url-input" 
+                   placeholder="http://192.168.0.100:8787" 
+                   value="">
+            <button class="button" onclick="openApp()">앱 열기</button>
+            
+            <div class="info-box">
+                💡 <strong>로컬 네트워크:</strong> PC와 같은 Wi-Fi에 연결되어 있어야 합니다.<br>
+                PC의 IP 주소를 입력하세요 (예: 192.168.0.100)
+            </div>
+        </div>
+
+        <div id="successBox" class="success-box">
+            ✅ 앱이 열렸습니다! 이제 브라우저 메뉴에서 "홈 화면에 추가"를 선택하세요.
+        </div>
+
+        <div class="warning-box">
+            ⚠️ <strong>주의:</strong><br>
+            • Android는 Chrome 브라우저만 지원합니다<br>
+            • iOS는 Safari 브라우저만 지원합니다<br>
+            • 인터넷 배포 시 HTTPS 주소를 사용하세요
+        </div>
+    </div>
+
+    <script>
+        // 현재 디바이스 정보 표시
+        function detectDevice() {
+            const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+            const isAndroid = /android/i.test(userAgent);
+            const isIOS = /iPad|iPhone|iPod/.test(userAgent) && !window.MSStream;
+            
+            if (isAndroid) {
+                document.querySelector('.install-section h2').innerHTML = '📱 Android 설치 방법';
+            } else if (isIOS) {
+                document.querySelector('.install-section h2').innerHTML = '📱 iOS 설치 방법';
+            }
+        }
+
+        // 서버 URL 자동 감지 (같은 호스트인 경우)
+        function autoDetectUrl() {
+            const currentHost = window.location.hostname;
+            if (currentHost !== 'localhost' && currentHost !== '127.0.0.1' && !currentHost.includes('file://')) {
+                document.getElementById('serverUrl').value = window.location.origin.replace(window.location.protocol + '//', 'http://');
+            } else {
+                // 기본값 또는 사용자 입력 대기
+                document.getElementById('serverUrl').placeholder = '서버 주소를 입력하세요 (예: http://192.168.0.100:8787)';
+            }
+        }
+
+        // 앱 열기
+        function openApp() {
+            const url = document.getElementById('serverUrl').value.trim();
+            if (!url) {
+                alert('서버 주소를 입력해주세요.');
+                return;
+            }
+
+            // URL 유효성 검사
+            if (!url.startsWith('http://') && !url.startsWith('https://')) {
+                document.getElementById('serverUrl').value = 'http://' + url;
+            }
+
+            // 새 창에서 앱 열기
+            window.open(document.getElementById('serverUrl').value, '_blank');
+            
+            // 성공 메시지 표시
+            document.getElementById('successBox').style.display = 'block';
+        }
+
+        // Enter 키로도 열기
+        document.getElementById('serverUrl').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                openApp();
+            }
+        });
+
+        // 초기화
+        detectDevice();
+        autoDetectUrl();
+    </script>
+</body>
+</html>

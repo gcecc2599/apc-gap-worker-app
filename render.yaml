@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: apc-gap-record
+    runtime: node
+    buildCommand: npm install && npm run build
+    startCommand: npm run start:prod
+    envVars:
+      - key: NODE_ENV
+        value: production
+      # Smithery API Key (환경 변수로 설정)
+      - key: SMITHERY_API_KEY
+        value: de50bb25-4fb0-4e5d-8648-ec1ce0656b56
+    healthCheckPath: /
+    plan: free

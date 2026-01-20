@@ -1,0 +1,16 @@
+name = "webapp"
+main = "src/index.tsx"
+compatibility_date = "2024-01-01"
+
+[env.production]
+name = "webapp-production"
+
+# D1 데이터베이스 설정 (향후 추가)
+# [[d1_databases]]
+# binding = "DB"
+# database_name = "webapp-production"
+# database_id = "your-database-id"
+
+# Cron 트리거 설정 (향후 추가)
+# [triggers]
+# crons = ["0 20 * * *"]  # 매일 오후 8시

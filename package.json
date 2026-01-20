@@ -1,0 +1,45 @@
+{
+  "name": "webapp",
+  "version": "1.0.0",
+  "description": "농가 수출 기록관리 시스템",
+  "type": "module",
+  "scripts": {
+    "dev": "tsx src/server.ts",
+    "dev:netlify": "netlify dev",
+    "build": "tsc && vite build && npm run copy-redirects && npm run remove-index",
+    "copy-redirects": "copy _redirects dist\\_redirects 2>nul || cp _redirects dist/_redirects",
+    "remove-index": "del dist\\index.html 2>nul || rm dist/index.html 2>/dev/null || true",
+    "build:netlify": "npm run build",
+    "deploy": "netlify deploy --prod",
+    "deploy:preview": "netlify deploy",
+    "dev:cloudflare": "wrangler dev",
+    "deploy:cloudflare": "npm run build && wrangler pages deploy dist",
+    "db:migrate:local": "wrangler d1 migrations apply webapp-production --local",
+    "deploy:render": "render deploy",
+    "start": "tsx src/server.ts",
+    "start:prod": "NODE_ENV=production tsx src/server.ts",
+    "smithery:login": "smithery login --key $env:SMITHERY_API_KEY"
+  },
+  "dependencies": {
+    "exceljs": "^4.4.0",
+    "hono": "^4.0.0",
+    "jspdf": "^2.5.1"
+  },
+  "devDependencies": {
+    "@capacitor/android": "^8.0.1",
+    "@capacitor/cli": "^8.0.1",
+    "@capacitor/core": "^8.0.1",
+    "@cloudflare/workers-types": "^4.20240125.0",
+    "@hono/node-server": "^1.12.0",
+    "@netlify/functions": "^2.5.0",
+    "@types/node": "^20.10.0",
+    "netlify-cli": "^17.0.0",
+    "tsx": "^4.7.0",
+    "typescript": "^5.3.0",
+    "vite": "^5.0.0",
+    "wrangler": "^3.20.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

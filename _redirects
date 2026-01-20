@@ -1,0 +1,8 @@
+# Netlify 리다이렉션 규칙
+# 모든 요청을 Netlify Functions로 리다이렉트 (Hono 앱이 처리)
+
+# API 요청을 Netlify Functions로 리다이렉트
+/api/* /.netlify/functions/api/:splat 200
+
+# 나머지 모든 요청을 Netlify Functions로 리다이렉트
+/* /.netlify/functions/api 200
