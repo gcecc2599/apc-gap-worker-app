@@ -17,7 +17,7 @@
     "db:migrate:local": "wrangler d1 migrations apply webapp-production --local",
     "deploy:render": "render deploy",
     "start": "tsx src/server.ts",
-    "start:prod": "NODE_ENV=production tsx src/server.ts",
+    "start:prod": "tsx src/server.ts",
     "smithery:login": "smithery login --key $env:SMITHERY_API_KEY"
   },
   "dependencies": {
