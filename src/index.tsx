@@ -18,29 +18,41 @@ const app = new Hono();
 // 실제 인증은 클라이언트 사이드에서 localStorage를 통해 확인
 
 // 정적 파일 서빙 (public 폴더)
+// 프로덕션 환경에서도 경로가 제대로 작동하도록 process.cwd() 사용
+const getPublicPath = (relativePath: string) => {
+  // 개발 환경: __dirname 사용, 프로덕션: process.cwd() 사용
+  const basePath = __dirname.includes('node_modules') || process.env.NODE_ENV === 'production' 
+    ? process.cwd() 
+    : __dirname.replace(/\/src$|\\src$/, '');
+  return join(basePath, 'public', relativePath);
+};
+
 app.get('/manifest.json', (c) => {
   try {
-    const file = readFileSync(join(__dirname, '../public/manifest.json'), 'utf-8');
+    const file = readFileSync(getPublicPath('manifest.json'), 'utf-8');
     return c.json(JSON.parse(file));
-  } catch {
+  } catch (error) {
+    console.error('manifest.json 읽기 오류:', error);
     return c.text('{}', 404);
   }
 });
 
 app.get('/icon-192.png', async (c) => {
   try {
-    const file = readFileSync(join(__dirname, '../public/icon-192.png'));
+    const file = readFileSync(getPublicPath('icon-192.png'));
     return c.body(file, 200, { 'Content-Type': 'image/png' });
-  } catch {
+  } catch (error) {
+    console.error('icon-192.png 읽기 오류:', error);
     return c.text('Not found', 404);
   }
 });
 
 app.get('/icon-512.png', async (c) => {
   try {
-    const file = readFileSync(join(__dirname, '../public/icon-512.png'));
+    const file = readFileSync(getPublicPath('icon-512.png'));
     return c.body(file, 200, { 'Content-Type': 'image/png' });
-  } catch {
+  } catch (error) {
+    console.error('icon-512.png 읽기 오류:', error);
     return c.text('Not found', 404);
   }
 });
@@ -48,12 +60,13 @@ app.get('/icon-512.png', async (c) => {
 app.get('/static/*', async (c) => {
   const path = c.req.param('*') || '';
   try {
-    const filePath = join(__dirname, '../public/static', path);
+    const filePath = getPublicPath(join('static', path));
     const file = readFileSync(filePath, 'utf-8');
     const ext = path.split('.').pop() || '';
     const contentType = ext === 'js' ? 'application/javascript' : 'text/plain';
     return c.body(file, 200, { 'Content-Type': contentType });
-  } catch {
+  } catch (error) {
+    console.error(`static/${path} 읽기 오류:`, error);
     return c.text('Not found', 404);
   }
 });
